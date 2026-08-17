@@ -92,10 +92,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ? TextField(
                 controller: _searchController,
                 autofocus: true,
-                style: const TextStyle(color: Colors.white),
+                style: const TextStyle(color: Color.fromARGB(255, 10, 0, 0)),
                 decoration: const InputDecoration(
                   hintText: 'Search contacts...',
-                  hintStyle: TextStyle(color: Colors.white70),
+                  hintStyle: TextStyle(color: Color.fromARGB(179, 14, 0, 0)),
                   border: InputBorder.none,
                 ),
                 onChanged: _runSearch,
