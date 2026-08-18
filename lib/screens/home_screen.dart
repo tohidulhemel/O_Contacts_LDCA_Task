@@ -1,3 +1,4 @@
+import 'package:contacts_ldca_app/utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import '../models/contact.dart';
 import '../services/contact_service.dart';
@@ -135,6 +136,100 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+  drawer: Drawer(
+  child: ListView(
+    padding: EdgeInsets.zero,
+    children: [
+      DrawerHeader(
+        decoration: const BoxDecoration(color: AppTheme.primaryColor),
+        child: const Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Icon(Icons.people_alt, color: Colors.white, size: 40),
+            SizedBox(height: 12),
+            Text(
+              'My Contacts',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 4),
+            Text(
+              'Manage your friends easily',
+              style: TextStyle(color: Colors.white70, fontSize: 13),
+            ),
+          ],
+        ),
+      ),
+      ListTile(
+        leading: const Icon(Icons.people_outline, color: AppTheme.primaryColor),
+        title: const Text('My Contacts'),
+        selected: true,
+        selectedTileColor: AppTheme.primaryColor.withValues(alpha: 0.08),
+        onTap: () => Navigator.pop(context), // already on this screen
+      ),
+      ListTile(
+        leading: const Icon(Icons.star_border),
+        title: const Text('Favorites'),
+        onTap: () async {
+          Navigator.pop(context); // close drawer first
+          await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const FavoritesScreen()),
+          );
+          _loadContacts();
+        },
+      ),
+      ListTile(
+        leading: const Icon(Icons.person_add_alt_outlined),
+        title: const Text('Add Contact'),
+        onTap: () async {
+          Navigator.pop(context);
+          await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const AddContactScreen()),
+          );
+          _loadContacts();
+        },
+      ),
+      const Divider(),
+      ListTile(
+        leading: const Icon(Icons.info_outline),
+        title: const Text('About App'),
+        onTap: () {
+          Navigator.pop(context);
+          showAboutDialog(
+            context: context,
+            applicationName: 'Contact Management App',
+            applicationVersion: '1.0.0',
+            children: const [
+              Text('A simple Flutter app for managing contacts locally using SQLite.'),
+            ],
+          );
+        },
+      ),
+      ListTile(
+        leading: const Icon(Icons.settings_outlined),
+        title: const Text('Settings'),
+        onTap: () {
+          Navigator.pop(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const SettingsScreen()),
+          );
+        },
+      ),
+ListTile(
+        leading: const Icon(Icons.logout_outlined),
+        title: const Text('Log Out'),
+      ),
+    ],
+  ),
+),
+
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : _contacts.isEmpty

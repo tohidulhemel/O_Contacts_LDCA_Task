@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../models/contact.dart';
 import '../services/contact_service.dart';
 import '../widgets/contact_form.dart';
 
