@@ -17,12 +17,6 @@ class ContactCard extends StatelessWidget {
   });
 
   // Builds "AS" style initials from the contact's name.
-  String _initials(String name) {
-    final parts = name.trim().split(RegExp(r'\s+'));
-    if (parts.isEmpty || parts.first.isEmpty) return '?';
-    if (parts.length == 1) return parts.first[0].toUpperCase();
-    return (parts.first[0] + parts.last[0]).toUpperCase();
-  }
 
   @override
   Widget build(BuildContext context) {
