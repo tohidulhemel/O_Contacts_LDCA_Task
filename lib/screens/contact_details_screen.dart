@@ -150,18 +150,19 @@ class _ContactDetailsScreenState extends State<ContactDetailsScreen> {
           Center(
             child: Column(
               children: [
-                CircleAvatar(
-                  radius: 42,
-                  backgroundColor: AppTheme.primaryColor.withValues(alpha: .15),
-                  child: Text(
-                    initials,
-                    style: const TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: AppTheme.primaryColor,
-                    ),
-                  ),
-                ),
+                // new
+CircleAvatar(
+  radius: 42,
+  backgroundColor: contact.avatarColor.withOpacity(0.15),
+  child: Text(
+    initials,
+    style: TextStyle(
+      fontSize: 28,
+      fontWeight: FontWeight.bold,
+      color: contact.avatarColor,
+    ),
+  ),
+),
                 const SizedBox(height: 12),
                 Text(contact.name, style: Theme.of(context).textTheme.titleLarge),
                 const SizedBox(height: 4),

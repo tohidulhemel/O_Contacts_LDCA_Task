@@ -30,16 +30,17 @@ class ContactCard extends StatelessWidget {
       child: ListTile(
         onTap: onTap,
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        leading: CircleAvatar(
-          backgroundColor: AppTheme.primaryColor.withValues(alpha: 0.15),
-          child: Text(
-            _initials(contact.name),
-            style: const TextStyle(
-              color: AppTheme.primaryColor,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
+        // new
+ leading: CircleAvatar(
+  backgroundColor: contact.avatarColor.withValues(alpha: .15),
+  child: Text(
+    contact.initials,
+    style: TextStyle(
+      color: contact.avatarColor,
+      fontWeight: FontWeight.bold,
+    ),
+  ),
+),
         title: Text(
           contact.name,
           style: Theme.of(context).textTheme.titleMedium,
