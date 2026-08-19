@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 // Used on Home (no contacts), Favorites (no favorites), and Search (no matches).
 class EmptyContactsView extends StatelessWidget {
   final IconData icon;
+  final String? imagePath;
   final String title;
   final String message;
 
   const EmptyContactsView({
     super.key,
     this.icon = Icons.people_outline,
+    this.imagePath,
     required this.title,
     required this.message,
   });
@@ -22,7 +24,15 @@ class EmptyContactsView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 72, color: Colors.grey.shade400),
+            imagePath != null
+                ? Image.asset(
+                    imagePath!,
+                    height: 160,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Icon(icon, size: 72, color: Colors.grey.shade400);
+                    },
+                  )
+                : Icon(icon, size: 72, color: Colors.grey.shade400),
             const SizedBox(height: 16),
             Text(
               title,

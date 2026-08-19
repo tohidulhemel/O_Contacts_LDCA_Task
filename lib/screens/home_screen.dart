@@ -114,18 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           IconButton(
-            icon: const Icon(Icons.star),
-            tooltip: 'Favorites',
-            onPressed: () async {
-              await Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const FavoritesScreen()),
-              );
-              _loadContacts();
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.settings_outlined),
+            icon: const Icon(Icons.more_vert),
             tooltip: 'Settings',
             onPressed: () {
               Navigator.push(
@@ -146,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Icon(Icons.people_alt, color: Colors.white, size: 40),
+            Icon(Icons.groups, color: Colors.white, size: 40),
             SizedBox(height: 12),
             Text(
               'My Contacts',
@@ -165,13 +154,14 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       ListTile(
-        leading: const Icon(Icons.people_outline, color: AppTheme.primaryColor),
+        leading: const Icon(Icons.people_alt_outlined, color: AppTheme.primaryColor),
         title: const Text('My Contacts'),
         selected: true,
         selectedTileColor: AppTheme.primaryColor.withValues(alpha: 0.08),
         onTap: () => Navigator.pop(context), // already on this screen
       ),
-      ListTile(
+
+       ListTile(
         leading: const Icon(Icons.star_border),
         title: const Text('Favorites'),
         onTap: () async {
@@ -182,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
           );
           _loadContacts();
         },
-      ),
+      ), 
       ListTile(
         leading: const Icon(Icons.person_add_alt_outlined),
         title: const Text('Add Contact'),
@@ -233,13 +223,15 @@ ListTile(
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : _contacts.isEmpty
-              ? EmptyContactsView(
-                  icon: _isSearching ? Icons.search_off : Icons.people_outline,
-                  title: _isSearching ? 'No matching contacts' : 'No contacts yet',
-                  message: _isSearching
-                      ? 'Try a different name.'
-                      : 'Add your first contact using the + button below.',
-                )
+              ? // new
+   EmptyContactsView(
+    imagePath: _isSearching ? null : 'assets/images/image_1.png',
+    icon: _isSearching ? Icons.search_off : Icons.people_outline,
+    title: _isSearching ? 'No matching contacts' : 'No contacts yet',
+    message: _isSearching
+        ? 'Try a different name.'
+        : 'Add your first contact using the + button below.',
+  )
               : RefreshIndicator(
                   onRefresh: _loadContacts,
                   child: ListView.builder(
