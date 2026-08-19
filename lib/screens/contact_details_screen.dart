@@ -152,7 +152,7 @@ class _ContactDetailsScreenState extends State<ContactDetailsScreen> {
               children: [
                 CircleAvatar(
                   radius: 42,
-                  backgroundColor: AppTheme.primaryColor.withOpacity(0.15),
+                  backgroundColor: AppTheme.primaryColor.withValues(alpha: .15),
                   child: Text(
                     initials,
                     style: const TextStyle(

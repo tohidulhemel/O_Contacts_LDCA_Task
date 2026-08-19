@@ -31,7 +31,7 @@ class ContactCard extends StatelessWidget {
         onTap: onTap,
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         leading: CircleAvatar(
-          backgroundColor: AppTheme.primaryColor.withOpacity(0.15),
+          backgroundColor: AppTheme.primaryColor.withValues(alpha: 0.15),
           child: Text(
             _initials(contact.name),
             style: const TextStyle(
