@@ -1,4 +1,3 @@
-import 'package:contacts_ldca_app/utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import '../models/contact.dart';
 
