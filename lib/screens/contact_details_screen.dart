@@ -75,9 +75,7 @@ class _ContactDetailsScreenState extends State<ContactDetailsScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Delete Contact?'),
-        content: Text(
-          'Are you sure you want to delete ${_contact!.name}?',
-        ),
+        content: Text('Are you sure you want to delete ${_contact!.name}?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
@@ -98,9 +96,9 @@ class _ContactDetailsScreenState extends State<ContactDetailsScreen> {
       try {
         await _contactService.deleteContact(_contact!.id!);
         if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Contact deleted')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Contact deleted')));
         Navigator.pop(context);
       } catch (e) {
         _showError(e);
@@ -108,13 +106,12 @@ class _ContactDetailsScreenState extends State<ContactDetailsScreen> {
     }
   }
 
-  Widget _infoTile(IconData icon, String label, String value) {
-    return Card(
-      child: ListTile(
-        leading: Icon(icon, color: AppTheme.primaryColor),
-        title: Text(value.isEmpty ? '-' : value),
-        subtitle: Text(label),
-      ),
+  Widget _infoTile(IconData icon, String label, String value,) {
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      leading: Icon(icon, color: AppTheme.primaryColor),
+      title: Text(value.isEmpty ? '-' : value),
+      subtitle: Text(label),
     );
   }
 
@@ -133,7 +130,13 @@ class _ContactDetailsScreenState extends State<ContactDetailsScreen> {
 
     final contact = _contact!;
     final initials = contact.name.isNotEmpty
-        ? contact.name.trim().split(RegExp(r'\s+')).map((w) => w[0]).take(2).join().toUpperCase()
+        ? contact.name
+              .trim()
+              .split(RegExp(r'\s+'))
+              .map((w) => w[0])
+              .take(2)
+              .join()
+              .toUpperCase()
         : '?';
 
     return Scaffold(
@@ -146,46 +149,79 @@ class _ContactDetailsScreenState extends State<ContactDetailsScreen> {
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
-        children: [
-          Center(
-            child: Column(
-              children: [
-                // new
-CircleAvatar(
-  radius: 42,
-  backgroundColor: contact.avatarColor.withOpacity(0.15),
-  child: Text(
-    initials,
-    style: TextStyle(
-      fontSize: 28,
-      fontWeight: FontWeight.bold,
-      color: contact.avatarColor,
-    ),
-  ),
-),
-                const SizedBox(height: 12),
-                Text(contact.name, style: Theme.of(context).textTheme.titleLarge),
-                const SizedBox(height: 4),
-                TextButton.icon(
-                  onPressed: _toggleFavorite,
-                  icon: Icon(
-                    contact.isFavorite ? Icons.star : Icons.star_border,
-                    color: contact.isFavorite
-                        ? AppTheme.favoriteColor
-                        : Colors.grey,
-                  ),
-                  label: Text(
-                    contact.isFavorite ? 'Favorite' : 'Add to Favorites',
-                  ),
-                ),
-              ],
+        children:[
+  Center(
+    child: Column(
+      children: [
+        CircleAvatar(
+          radius: 42,
+          backgroundColor: contact.avatarColor.withValues(alpha: .15),
+          child: Text(
+            initials,
+            style: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+              color: contact.avatarColor,
             ),
           ),
-          const SizedBox(height: 16),
-          _infoTile(Icons.phone_outlined, 'Phone', contact.phone),
-          _infoTile(Icons.email_outlined, 'Email', contact.email),
-          _infoTile(Icons.location_on_outlined, 'Address', contact.address),
+        ),
+        const SizedBox(height: 12),
+        Text(
+          contact.name,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        const SizedBox(height: 4),
+        TextButton.icon(
+          onPressed: _toggleFavorite,
+          icon: Icon(
+            contact.isFavorite
+                ? Icons.star
+                : Icons.star_border,
+            color: contact.isFavorite
+                ? AppTheme.favoriteColor
+                : Colors.grey,
+          ),
+          label: Text(
+            contact.isFavorite
+                ? 'Favorite'
+                : 'Add to Favorites',
+          ),
+        ),
+      ],
+    ),
+  ),
+
+  const SizedBox(height: 14),
+
+  // One card containing all contact information
+  Card(
+    child: Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 8,
+      ),
+      child: Column(
+        children: [
+          _infoTile(
+            Icons.phone,
+            'Phone',
+            contact.phone,
+          ),
+          _infoTile(
+            Icons.email,
+            'Email',
+            contact.email,
+          ),
+          _infoTile(
+            Icons.location_on,
+            'Address',
+            contact.address,
+          ),
         ],
+      ),
+    ),
+  ),
+],
       ),
     );
   }

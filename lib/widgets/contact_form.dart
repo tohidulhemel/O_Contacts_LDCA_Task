@@ -1,3 +1,4 @@
+import 'package:contacts_ldca_app/utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import '../models/contact.dart';
 
@@ -102,11 +103,31 @@ class _ContactFormState extends State<ContactForm> {
       child: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          const SizedBox(height: 24),
+
+          Center(
+            child: Container(
+              width: 76,
+              height: 76,
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 33, 86, 233).withValues(alpha: 0.10),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.camera_alt,
+                size: 32,
+                color: const Color.fromARGB(255, 50, 56, 226),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 60),
+
           TextFormField(
             controller: _nameController,
             decoration: const InputDecoration(
               labelText: 'Name',
-              prefixIcon: Icon(Icons.person_outline),
+              prefixIcon: Icon(Icons.person),
             ),
             validator: _validateName,
             textInputAction: TextInputAction.next,
@@ -116,7 +137,7 @@ class _ContactFormState extends State<ContactForm> {
             controller: _phoneController,
             decoration: const InputDecoration(
               labelText: 'Phone Number',
-              prefixIcon: Icon(Icons.phone_outlined),
+              prefixIcon: Icon(Icons.phone),
             ),
             keyboardType: TextInputType.phone,
             validator: _validatePhone,

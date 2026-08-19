@@ -20,48 +20,41 @@ class ContactCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        onTap: onTap,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        // new
- leading: CircleAvatar(
-  backgroundColor: contact.avatarColor.withValues(alpha: .15),
-  child: Text(
-    contact.initials,
-    style: TextStyle(
-      color: contact.avatarColor,
-      fontWeight: FontWeight.bold,
-    ),
-  ),
-),
-        title: Text(
-          contact.name,
-          style: Theme.of(context).textTheme.titleMedium,
+    return ListTile(
+      onTap: onTap,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      // new
+      leading: CircleAvatar(
+        backgroundColor: contact.avatarColor.withValues(alpha: .15),
+        child: Text(
+          contact.initials,
+          style: TextStyle(
+            color: contact.avatarColor,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+      ),
+      title: Text(contact.name, style: Theme.of(context).textTheme.titleMedium),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(contact.email, style: Theme.of(context).textTheme.bodySmall),
+          if (contact.email.isNotEmpty)
             Text(contact.phone, style: Theme.of(context).textTheme.bodySmall),
-            if (contact.email.isNotEmpty)
-              Text(contact.email, style: Theme.of(context).textTheme.bodySmall),
-          ],
-        ),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            IconButton(
-              icon: Icon(
-                contact.isFavorite ? Icons.star : Icons.star_border,
-                color: contact.isFavorite
-                    ? AppTheme.favoriteColor
-                    : Colors.grey,
-              ),
-              onPressed: onFavoriteTap,
+        ],
+      ),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IconButton(
+            icon: Icon(
+              contact.isFavorite ? Icons.star : Icons.star_border,
+              color: contact.isFavorite ? AppTheme.favoriteColor : Colors.grey,
             ),
-            const Icon(Icons.chevron_right, color: Colors.grey),
-          ],
-        ),
+            onPressed: onFavoriteTap,
+          ),
+          const Icon(Icons.chevron_right, color: Colors.grey),
+        ],
       ),
     );
   }
